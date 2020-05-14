@@ -9,7 +9,7 @@ import { ToastService } from '../toast/toast.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-
+inventory: Array<any> [];
   constructor(
     private http: Http,
     private activatedRoute: ActivatedRoute,
@@ -18,6 +18,10 @@ export class CartComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.inventory = await this.loadInventoryFromJson();
   }
-
+ async loadInventoryFromJson() {
+   const inventory = await this.http.get('assets/inventory.json').toPromise();
+   return inventory.json();
+}
 }
